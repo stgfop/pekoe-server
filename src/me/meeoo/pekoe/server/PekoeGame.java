@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 import me.meeoo.otomaton.game.Game;
 import me.meeoo.otomaton.game.Player;
+import me.meeoo.otomaton.json.JSONable;
+import me.meeoo.otomaton.json.JSONifier;
 import me.meeoo.pekoe.server.rule.PekoeOtomaton;
 
 public class PekoeGame extends Game<PekoeOtomaton, PekoePlayer> {
@@ -129,7 +131,36 @@ public class PekoeGame extends Game<PekoeOtomaton, PekoePlayer> {
     }
 
     public boolean isStarted() {
+        if (rule == null) {
+            return false;
+        }
         return rule.isStarted();
+    }
+
+    @Override
+    public StringBuilder toJSON(StringBuilder sb) {
+        sb.append('{');
+
+        sb.append("\"id\":");
+        JSONifier.toJSON(sb, getId());
+
+        sb.append(",\"name\":");
+        JSONifier.toJSON(sb, getName());
+
+        sb.append(",\"visualHash\":");
+        JSONifier.toJSON(sb, getVisualHash());
+
+        sb.append(",\"cards\":");
+        JSONifier.toJSON(sb, getCards());
+
+        sb.append(",\"players\":");
+        JSONifier.toJSON(sb, getPlayers());
+
+        sb.append(",\"rule\":");
+        JSONifier.toJSON(sb, getRule());
+
+        sb.append('}');
+        return sb;
     }
 
 }

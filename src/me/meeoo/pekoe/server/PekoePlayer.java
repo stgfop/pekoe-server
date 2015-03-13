@@ -8,6 +8,7 @@ package me.meeoo.pekoe.server;
 
 import java.util.LinkedList;
 import me.meeoo.otomaton.game.Player;
+import me.meeoo.otomaton.json.JSONifier;
 
 
 public class PekoePlayer extends Player {
@@ -32,7 +33,27 @@ public class PekoePlayer extends Player {
     public void updateScore(int delta) {
         this.score += delta;
     }
+
+    @Override
+    public StringBuilder toJSON(StringBuilder sb) {
+        sb.append('{');
+        
+        sb.append("\"id\":");
+        JSONifier.toJSON(sb, getId());
+        
+        sb.append(",\"name\":");
+        JSONifier.toJSON(sb, getName());
+      
+        sb.append(",\"score\":");
+        JSONifier.toJSON(sb, getScore());
     
+        sb.append(",\"hand\":");
+        JSONifier.toJSON(sb, getHand());
+        
+        sb.append('}');
+        return sb;
+    }
+
     
 
     
